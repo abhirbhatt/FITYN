@@ -1,78 +1,57 @@
-# FITYN — 3D Gallery-Minimal Clothing Store
+# FITYN
 
-An architectural, gallery-minimal e-commerce storefront for contemporary apparel featuring an interactive, physics-free 3D garment rail built with Next.js 15 App Router, React 19, Three.js / React Three Fiber, and Zustand.
+A 3D clothing storefront built with Next.js 15, React Three Fiber, and Tailwind CSS.
 
----
+Instead of traditional flat product grids, the store uses an interactive 3D rail where garments can be scrolled horizontally, inspected, and flipped to view front and back prints. The project includes a complete e-commerce flow from product selection to checkout.
 
-## Overview
+## Features
 
-FITYN reimagines digital apparel shopping as a physical rail experience. Rather than static 2D product grids, garments hang on a continuous, textured 3D rail that responds smoothly to mouse, touch, and keyboard interactions.
-
-### Key Features
-
-- **Interactive 3D Garment Rail**: Textured planar garment meshes in Three.js/R3F with dynamic camera lerping, colorway switching, and front/back flip views.
-- **Progressive Fallback**: Graceful 2D CSS-based fallback rail for devices without WebGL support or with reduced motion preferences.
-- **Gallery-Minimal Aesthetic**: Strict design tokens with high-contrast neutral backgrounds (`#F3F3F0`, `#E9E9E4`), bold olive accents (`#486C2F`), off-white highlights (`#FFF2B4`), Anton display typography, and Inter system sans.
-- **Complete Shopping Journey**:
-  - Interactive homepage rail and collection browsing.
-  - Product details with size and colorway selection.
-  - Zustand-powered persistent cart with drawer and cart view.
-  - Zod-validated mock checkout with shipping calculation and order reference generation.
-  - Order confirmation screen.
-- **Deterministic Asset Pipeline**: Automated generation and validation of 1024px & 2048px WebP garment textures from vector archetypes via Sharp.
-
----
+- **Interactive 3D Rail**: Garments are rendered on a continuous 3D rail using Three.js and React Three Fiber with camera transitions and front/back flip controls.
+- **2D Fallback**: Automatic CSS-based rail fallback for devices without WebGL support or when reduced motion is preferred.
+- **Product Details**: Variant and colorway switching, size picker, and garment specifications.
+- **Cart & State Management**: Persistent cart state managed with Zustand, including slide-out drawer and full cart review.
+- **Checkout Flow**: Multi-step checkout with shipping calculation, form validation using Zod, and order reference generation.
+- **Asset Pipeline**: Node script using Sharp to generate transparent multi-resolution WebP garment textures from SVG sources.
 
 ## Tech Stack
 
-- **Framework**: Next.js 15 (App Router, Server Components + Client Views)
-- **Runtime**: React 19
-- **3D Engine**: Three.js, React Three Fiber, `@react-three/drei`
-- **State Management**: Zustand
-- **Styling**: Tailwind CSS & CSS custom property design tokens
-- **Validation**: Zod
-- **Asset Processing**: Sharp
-
----
+- Next.js 15 (App Router)
+- React 19
+- Three.js / React Three Fiber / Drei
+- Zustand
+- Tailwind CSS
+- Zod
+- Sharp
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 18+ or 20+
-- pnpm 9+
+- Node.js 18 or higher
+- pnpm (recommended) or npm
 
 ### Installation
 
 ```bash
-# Clone the repository
 git clone https://github.com/abhirbhatt/FITYN.git
 cd FITYN
-
-# Install dependencies
 pnpm install
 ```
 
-### Running the Development Server
+### Running Locally
 
 ```bash
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000) to view the site.
 
-### Scripts
+## Commands
 
-- `pnpm dev`: Start the Next.js development server.
-- `pnpm build`: Create a production build.
-- `pnpm start`: Start the production server.
-- `pnpm typecheck`: Run TypeScript compiler check.
-- `pnpm lint`: Run ESLint.
-- `pnpm generate:assets`: Generate multi-resolution WebP garment assets.
-- `pnpm validate:assets`: Validate texture dimensions, alpha transparency, and catalog mapping.
-
----
-
-## License
-
-MIT
+- `pnpm dev` - Start local development server
+- `pnpm build` - Create production build
+- `pnpm start` - Start production server
+- `pnpm typecheck` - Run TypeScript compiler checks
+- `pnpm lint` - Run ESLint
+- `pnpm generate:assets` - Generate WebP garment textures
+- `pnpm validate:assets` - Validate image dimensions and catalog integrity
