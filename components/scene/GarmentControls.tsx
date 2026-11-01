@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { PRODUCTS } from '@/data/products';
@@ -9,11 +9,12 @@ import { useSceneStore } from '@/store/useSceneStore';
 export function GarmentControls() {
   const router = useRouter();
   const pathname = usePathname();
+  const [isScrolledPastHero, setIsScrolledPastHero] = useState(false);
 
   const {
     activeGarmentIndex,
     side,
-    colourwayIndex,
+    garmentColourways,
     nextGarment,
     prevGarment,
     toggleSide,
@@ -21,8 +22,18 @@ export function GarmentControls() {
   } = useSceneStore();
 
   const activeProduct = PRODUCTS[activeGarmentIndex] ?? PRODUCTS[0];
+  const activeColourwayIdx = garmentColourways[activeGarmentIndex] ?? 0;
   const activeVariant =
-    activeProduct.variants[colourwayIndex % activeProduct.variants.length];
+    activeProduct.variants[activeColourwayIdx % activeProduct.variants.length];
+
+  // Scroll listener to hide rail controls when user scrolls down to browse other sections
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolledPastHero(window.scrollY > 140);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Keyboard navigation handler
   const handleKeyDown = useCallback(
@@ -57,7 +68,7 @@ export function GarmentControls() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleKeyDown]);
 
-  // Only render prominent rail controls on the home rail route
+  // Only render rail controls on the home rail route
   const isRailVisible = pathname === '/';
 
   if (!isRailVisible) {
@@ -66,7 +77,7 @@ export function GarmentControls() {
 
   return (
     <>
-      {/* Top / Invisible ARIA Live Region for Assistive Tech */}
+      {/* Invisible ARIA Live Region for Assistive Tech */}
       <div
         role="status"
         aria-live="polite"
@@ -76,13 +87,17 @@ export function GarmentControls() {
         Active garment: {activeProduct.name}, Colour: {activeVariant.colourName}, Viewing: {side} side.
       </div>
 
-      {/* Center Left/Right Arrow Navigation (Fixed & Viewport-Centered) */}
-      <div className="fixed top-1/2 -translate-y-1/2 left-4 right-4 sm:left-8 sm:right-8 z-20 flex items-center justify-between pointer-events-none">
+      {/* Sleek Minimalist Side Arrow Navigation */}
+      <div
+        className={`fixed top-1/2 -translate-y-1/2 left-3 right-3 sm:left-6 sm:right-6 z-20 flex items-center justify-between pointer-events-none select-none transition-opacity duration-300 ${
+          isScrolledPastHero ? 'opacity-0 pointer-events-none' : 'opacity-100'
+        }`}
+      >
         <button
           type="button"
           onClick={prevGarment}
           aria-label="Previous garment"
-          className="pointer-events-auto min-h-touch min-w-touch w-11 h-11 rounded-full bg-white/95 border border-line flex items-center justify-center font-display text-base text-black shadow-md hover:border-black hover:bg-white transition-colors"
+          className="pointer-events-auto w-10 h-10 rounded-full bg-white/80 hover:bg-white border border-black/10 flex items-center justify-center font-display text-sm text-black shadow-sm transition-all hover:scale-105 active:scale-95"
         >
           &larr;
         </button>
@@ -91,43 +106,45 @@ export function GarmentControls() {
           type="button"
           onClick={nextGarment}
           aria-label="Next garment"
-          className="pointer-events-auto min-h-touch min-w-touch w-11 h-11 rounded-full bg-white/95 border border-line flex items-center justify-center font-display text-base text-black shadow-md hover:border-black hover:bg-white transition-colors"
+          className="pointer-events-auto w-10 h-10 rounded-full bg-white/80 hover:bg-white border border-black/10 flex items-center justify-center font-display text-sm text-black shadow-sm transition-all hover:scale-105 active:scale-95"
         >
           &rarr;
         </button>
       </div>
 
-      {/* Bottom Floating Rail Interactive Bar (Fixed above Marquee Bar) */}
-      <div className="pointer-events-auto fixed bottom-14 sm:bottom-18 left-4 right-4 sm:left-1/2 sm:-translate-x-1/2 max-w-2xl z-20 flex flex-col sm:flex-row items-center justify-between gap-4 bg-white/95 backdrop-blur-md border border-line p-3 sm:px-6 shadow-lg">
-        {/* Active Product Info */}
-        <div className="flex items-center gap-3 text-center sm:text-left">
-          <span className="font-mono text-xs text-black/50">
-            0{activeGarmentIndex + 1} / 0{PRODUCTS.length}
+      {/* Clean Minimalist Typography & Controls (No bulky drawer box) */}
+      <div
+        className={`fixed bottom-14 sm:bottom-16 left-0 right-0 z-20 flex flex-col items-center justify-center gap-2 px-4 select-none transition-opacity duration-300 ${
+          isScrolledPastHero ? 'opacity-0 pointer-events-none' : 'opacity-100'
+        }`}
+      >
+        {/* Active Product Title & Subtitle */}
+        <div className="text-center pointer-events-auto">
+          <span className="font-mono text-[10px] uppercase tracking-widest text-black/50 block mb-0.5">
+            0{activeGarmentIndex + 1} / 0{PRODUCTS.length} &bull; {activeVariant.colourName}
           </span>
-          <div>
-            <h2 className="font-display text-sm uppercase tracking-display text-black">
-              {activeProduct.name}
-            </h2>
-            <span className="font-sans text-[11px] text-black/60 block">
-              {activeVariant.colourName} &bull; &#8377;
-              {(activeProduct.price / 100).toLocaleString('en-IN', {
-                minimumFractionDigits: 2,
-              })}
-            </span>
-          </div>
+          <h2 className="font-display text-xl sm:text-2xl uppercase tracking-display text-black">
+            {activeProduct.name}
+          </h2>
+          <span className="font-sans text-xs text-black/70 font-medium block">
+            &#8377;
+            {(activeProduct.price / 100).toLocaleString('en-IN', {
+              minimumFractionDigits: 2,
+            })}
+          </span>
         </div>
 
-        {/* Controls: Flip Side & Colourway Toggle */}
-        <div className="flex items-center gap-3">
-          {/* Front / Back Toggle */}
-          <div className="flex items-center border border-line bg-bg-2 p-0.5">
+        {/* Minimalist Floating Controls Pill Row */}
+        <div className="pointer-events-auto flex items-center gap-2.5 flex-wrap justify-center mt-1">
+          {/* Front / Back Segmented Pill */}
+          <div className="flex items-center rounded-full border border-black/15 bg-white/80 backdrop-blur-sm p-0.5 shadow-sm">
             <button
               type="button"
               onClick={toggleSide}
-              className={`min-h-[34px] px-3 font-display text-[11px] uppercase tracking-display transition-colors ${
+              className={`px-3 py-1 rounded-full font-display text-[10px] uppercase tracking-wider transition-all ${
                 side === 'front'
                   ? 'bg-black text-offwhite'
-                  : 'text-black hover:text-olive'
+                  : 'text-black/70 hover:text-black'
               }`}
             >
               FRONT
@@ -135,31 +152,30 @@ export function GarmentControls() {
             <button
               type="button"
               onClick={toggleSide}
-              className={`min-h-[34px] px-3 font-display text-[11px] uppercase tracking-display transition-colors ${
+              className={`px-3 py-1 rounded-full font-display text-[10px] uppercase tracking-wider transition-all ${
                 side === 'back'
                   ? 'bg-black text-offwhite'
-                  : 'text-black hover:text-olive'
+                  : 'text-black/70 hover:text-black'
               }`}
             >
               BACK
             </button>
           </div>
 
-          {/* Colourway Swatches */}
-          <div className="flex items-center gap-1.5 border-l border-line pl-3">
+          {/* Colourway Swatches Pill */}
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-black/15 bg-white/80 backdrop-blur-sm shadow-sm">
             {activeProduct.variants.map((v, vIdx) => {
-              const isSelected =
-                colourwayIndex % activeProduct.variants.length === vIdx;
+              const isSelected = activeColourwayIdx === vIdx;
               return (
                 <button
                   key={v.id}
                   type="button"
                   onClick={() => setColourway(vIdx)}
                   aria-label={`Select ${v.colourName}`}
-                  className={`w-6 h-6 rounded-full border transition-all ${
+                  className={`w-4 h-4 rounded-full border transition-all ${
                     isSelected
                       ? 'border-black scale-110 ring-2 ring-olive/40'
-                      : 'border-line hover:border-black'
+                      : 'border-black/20 hover:border-black'
                   }`}
                   style={{ backgroundColor: v.colourHex }}
                 />
@@ -167,12 +183,13 @@ export function GarmentControls() {
             })}
           </div>
 
-          {/* Link to Product Detail */}
+          {/* SEE AVAILABILITY ↗ Pill Button */}
           <Link
             href={`/product/${activeProduct.slug}`}
-            className="min-h-[34px] bg-olive text-offwhite px-4 flex items-center font-display text-[11px] uppercase tracking-display hover:opacity-90 transition-opacity ml-1"
+            className="rounded-full bg-olive text-offwhite px-4 py-1.5 font-display text-[11px] uppercase tracking-display hover:bg-black transition-all shadow-sm flex items-center gap-1 active:scale-95"
           >
-            SEE AVAILABILITY &nearr;
+            <span>SEE AVAILABILITY</span>
+            <span>&nearr;</span>
           </Link>
         </div>
       </div>

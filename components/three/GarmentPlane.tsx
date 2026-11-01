@@ -6,6 +6,7 @@ import { useFrame, useLoader } from '@react-three/fiber';
 import { Product } from '@/lib/types/commerce';
 import { createGarmentMaterial } from './shaders/garmentShader';
 import { HangTag } from './HangTag';
+import { Hanger } from './Hanger';
 import { assetPath } from '@/lib/utils/assetPath';
 import { useSceneStore } from '@/store/useSceneStore';
 
@@ -164,6 +165,9 @@ export function GarmentPlane({
   // Hanger coordinates: Top of plane is at y = 0.35, pinned to rail at y = 1.25
   return (
     <group ref={groupRef} position={[0, 0, 0]}>
+      {/* 3D Boutique Metallic Hanger Hooked Over Rail */}
+      <Hanger />
+
       {/* Garment Textured Quad */}
       <mesh
         ref={meshRef}

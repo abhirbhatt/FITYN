@@ -55,11 +55,10 @@ export function SiteHeader({ backHref, backLabel }: SiteHeaderProps) {
         >
           <span>Cart</span>
           <span
-            className={`font-mono text-[11px] px-1.5 py-0.5 transition-colors ${
-              cartCount > 0
+            className={`font-mono text-[11px] px-1.5 py-0.5 transition-colors ${cartCount > 0
                 ? 'bg-olive text-offwhite font-bold'
                 : 'bg-bg-2 text-black/60'
-            }`}
+              }`}
           >
             {cartCount}
           </span>

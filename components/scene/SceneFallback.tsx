@@ -12,7 +12,7 @@ export function SceneFallback() {
   const {
     activeGarmentIndex,
     side,
-    colourwayIndex,
+    garmentColourways,
     routeFocus,
     setActiveGarment,
   } = useSceneStore();
@@ -22,7 +22,8 @@ export function SceneFallback() {
   // In product view mode, render only the active garment in the dedicated product stage
   if (isProductRoute) {
     const prod = PRODUCTS[activeGarmentIndex] ?? PRODUCTS[0];
-    const variant = prod.variants[colourwayIndex % prod.variants.length];
+    const activeColourway = garmentColourways[activeGarmentIndex] ?? 0;
+    const variant = prod.variants[activeColourway % prod.variants.length];
     const textureSrc = side === 'back' ? variant.backTexture : variant.frontTexture;
 
     return (
@@ -65,7 +66,8 @@ export function SceneFallback() {
       >
         {PRODUCTS.map((prod, idx) => {
           const isActive = idx === activeGarmentIndex;
-          const variant = prod.variants[colourwayIndex % prod.variants.length];
+          const prodColourway = garmentColourways[idx] ?? 0;
+          const variant = prod.variants[prodColourway % prod.variants.length];
           const textureSrc =
             side === 'back' && isActive ? variant.backTexture : variant.frontTexture;
 

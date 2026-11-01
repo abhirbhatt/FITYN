@@ -18,7 +18,7 @@ export function GarmentRail() {
   const {
     activeGarmentIndex,
     side,
-    colourwayIndex,
+    garmentColourways,
     routeFocus,
     setActiveGarment,
   } = useSceneStore();
@@ -100,7 +100,7 @@ export function GarmentRail() {
                 index={idx}
                 isActive={isActive}
                 isFlipped={isActive && side === 'back'}
-                colourwayIndex={colourwayIndex}
+                colourwayIndex={garmentColourways[idx] ?? 0}
                 windEnabled={windEnabled}
                 blurEnabled={blurEnabled}
                 hangTagsEnabled={hangTagsEnabled}

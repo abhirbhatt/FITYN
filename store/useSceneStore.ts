@@ -1,40 +1,53 @@
 import { create } from 'zustand';
 
 export type GarmentSide = 'front' | 'back';
-export type SceneRouteFocus = 'rail' | 'product' | 'collections' | 'cart' | 'checkout' | 'idle';
+export type SceneRouteFocus =
+  | 'rail'
+  | 'product'
+  | 'collections'
+  | 'cart'
+  | 'checkout'
+  | 'idle';
 
 interface SceneState {
   activeGarmentIndex: number;
   activeGarmentId: string | null;
   side: GarmentSide;
   colourwayIndex: number;
+  garmentColourways: Record<number, number>;
   routeFocus: SceneRouteFocus;
   totalGarments: number;
   setActiveGarment: (index: number, id?: string | null) => void;
   setSide: (side: GarmentSide) => void;
   toggleSide: () => void;
   setColourway: (index: number) => void;
+  setGarmentColourway: (garmentIndex: number, colourwayIndex: number) => void;
+  getGarmentColourway: (garmentIndex: number) => number;
   setRouteFocus: (focus: SceneRouteFocus) => void;
   nextGarment: () => void;
   prevGarment: () => void;
   resetScene: () => void;
 }
 
-export const useSceneStore = create<SceneState>((set) => ({
+export const useSceneStore = create<SceneState>((set, get) => ({
   activeGarmentIndex: 0,
   activeGarmentId: null,
   side: 'front',
   colourwayIndex: 0,
+  garmentColourways: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 },
   routeFocus: 'rail',
   totalGarments: 7,
 
-  setActiveGarment: (index: number, id: string | null = null) =>
+  setActiveGarment: (index: number, id: string | null = null) => {
+    const validIdx = Math.max(0, Math.min(6, index));
+    const activeColourway = get().garmentColourways[validIdx] ?? 0;
     set({
-      activeGarmentIndex: Math.max(0, Math.min(6, index)),
+      activeGarmentIndex: validIdx,
       activeGarmentId: id,
       side: 'front',
-      colourwayIndex: 0,
-    }),
+      colourwayIndex: activeColourway,
+    });
+  },
 
   setSide: (side: GarmentSide) => set({ side }),
 
@@ -44,7 +57,33 @@ export const useSceneStore = create<SceneState>((set) => ({
     })),
 
   setColourway: (colourwayIndex: number) =>
-    set({ colourwayIndex: Math.max(0, colourwayIndex) }),
+    set((state) => {
+      const validColourway = Math.max(0, colourwayIndex);
+      return {
+        colourwayIndex: validColourway,
+        garmentColourways: {
+          ...state.garmentColourways,
+          [state.activeGarmentIndex]: validColourway,
+        },
+      };
+    }),
+
+  setGarmentColourway: (garmentIndex: number, colourwayIndex: number) =>
+    set((state) => {
+      const validColourway = Math.max(0, colourwayIndex);
+      const isCurrentActive = state.activeGarmentIndex === garmentIndex;
+      return {
+        ...(isCurrentActive ? { colourwayIndex: validColourway } : {}),
+        garmentColourways: {
+          ...state.garmentColourways,
+          [garmentIndex]: validColourway,
+        },
+      };
+    }),
+
+  getGarmentColourway: (garmentIndex: number) => {
+    return get().garmentColourways[garmentIndex] ?? 0;
+  },
 
   setRouteFocus: (routeFocus: SceneRouteFocus) => set({ routeFocus }),
 
@@ -54,18 +93,19 @@ export const useSceneStore = create<SceneState>((set) => ({
       return {
         activeGarmentIndex: next,
         side: 'front',
-        colourwayIndex: 0,
+        colourwayIndex: state.garmentColourways[next] ?? 0,
       };
     }),
 
   prevGarment: () =>
     set((state) => {
       const prev =
-        (state.activeGarmentIndex - 1 + state.totalGarments) % state.totalGarments;
+        (state.activeGarmentIndex - 1 + state.totalGarments) %
+        state.totalGarments;
       return {
         activeGarmentIndex: prev,
         side: 'front',
-        colourwayIndex: 0,
+        colourwayIndex: state.garmentColourways[prev] ?? 0,
       };
     }),
 
@@ -75,7 +115,6 @@ export const useSceneStore = create<SceneState>((set) => ({
       activeGarmentId: null,
       side: 'front',
       colourwayIndex: 0,
-      routeFocus: 'rail',
+      garmentColourways: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 },
     }),
 }));
-
