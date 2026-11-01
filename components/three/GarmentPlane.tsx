@@ -6,6 +6,7 @@ import { useFrame, useLoader } from '@react-three/fiber';
 import { Product } from '@/lib/types/commerce';
 import { createGarmentMaterial } from './shaders/garmentShader';
 import { HangTag } from './HangTag';
+import { assetPath } from '@/lib/utils/assetPath';
 
 interface GarmentPlaneProps {
   product: Product;
@@ -41,10 +42,10 @@ export function GarmentPlane({
 
   // Load textures
   const [frontTex, backTex, nextFrontTex, nextBackTex] = useLoader(THREE.TextureLoader, [
-    currentVariant.frontTexture,
-    currentVariant.backTexture,
-    nextVariant.frontTexture,
-    nextVariant.backTexture,
+    assetPath(currentVariant.frontTexture),
+    assetPath(currentVariant.backTexture),
+    assetPath(nextVariant.frontTexture),
+    assetPath(nextVariant.backTexture),
   ]);
 
   // Phase offset so garments do not sway identically in lockstep

@@ -3,10 +3,11 @@
 import React from 'react';
 import * as THREE from 'three';
 import { useTexture } from '@react-three/drei';
+import { assetPath } from '@/lib/utils/assetPath';
 
 export function RailGeometry() {
-  const railTexture = useTexture('/garments/textures/rail.webp');
-  const shadowTexture = useTexture('/garments/textures/ground-shadow.webp');
+  const railTexture = useTexture(assetPath('/garments/textures/rail.webp'));
+  const shadowTexture = useTexture(assetPath('/garments/textures/ground-shadow.webp'));
 
   // Repeat rail texture horizontally along the long bar
   railTexture.wrapS = THREE.RepeatWrapping;

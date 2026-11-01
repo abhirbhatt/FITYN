@@ -4,6 +4,7 @@ import React, { useRef } from 'react';
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
+import { assetPath } from '@/lib/utils/assetPath';
 
 interface HangTagProps {
   position?: [number, number, number];
@@ -12,7 +13,7 @@ interface HangTagProps {
 
 export function HangTag({ position = [0.42, 0.15, 0.05], enabled = true }: HangTagProps) {
   const groupRef = useRef<THREE.Group>(null);
-  const tagTexture = useTexture('/garments/textures/hang-tag.webp');
+  const tagTexture = useTexture(assetPath('/garments/textures/hang-tag.webp'));
 
   // Spring-damper physics variables
   const theta = useRef(0);
