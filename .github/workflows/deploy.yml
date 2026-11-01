@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy Next.js to GitHub Pages
 
 on:
   push:
@@ -26,6 +26,7 @@ jobs:
         uses: pnpm/action-setup@v3
         with:
           version: 9
+          run_install: false
 
       - name: Setup Node
         uses: actions/setup-node@v4
