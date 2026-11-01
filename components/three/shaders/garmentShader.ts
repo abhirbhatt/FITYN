@@ -12,6 +12,7 @@ export interface GarmentShaderUniforms {
   uSwayAmplitude: { value: number };
   uMipBias: { value: number };
   uAlphaTest: { value: number };
+  uDim: { value: number };
 }
 
 export const GarmentVertexShader = /* glsl */ `
@@ -55,6 +56,7 @@ export const GarmentFragmentShader = /* glsl */ `
   uniform float uWipeProgress;
   uniform float uMipBias;
   uniform float uAlphaTest;
+  uniform float uDim;
 
   varying vec2 vUv;
 
@@ -83,6 +85,9 @@ export const GarmentFragmentShader = /* glsl */ `
     if (finalCol.a < uAlphaTest) {
       discard;
     }
+    
+    // Dim inactive neighbour garments to draw spotlight focus on selected piece
+    finalCol.rgb *= uDim;
     
     gl_FragColor = finalCol;
   }
@@ -115,6 +120,7 @@ export function createGarmentMaterial(
     uSwayAmplitude: { value: 0.04 }, // ~1.5 - 2.0 degrees
     uMipBias: { value: 0.0 },
     uAlphaTest: { value: 0.5 },
+    uDim: { value: 1.0 },
   };
 
   return new THREE.ShaderMaterial({

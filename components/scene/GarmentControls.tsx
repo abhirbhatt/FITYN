@@ -172,7 +172,7 @@ export function GarmentControls() {
             href={`/product/${activeProduct.slug}`}
             className="min-h-[34px] bg-olive text-offwhite px-4 flex items-center font-display text-[11px] uppercase tracking-display hover:opacity-90 transition-opacity ml-1"
           >
-            SEE AVAILABILITY
+            SEE AVAILABILITY &nearr;
           </Link>
         </div>
       </div>

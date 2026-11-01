@@ -65,12 +65,14 @@ export function SiteHeader({ backHref, backLabel }: SiteHeaderProps) {
           </span>
         </button>
 
-        <Link
-          href="/dev/tokens"
-          className="text-xs uppercase tracking-caption border border-line px-3 py-1.5 hover:border-black transition-colors min-h-touch flex items-center"
-        >
-          Tokens
-        </Link>
+        {process.env.NODE_ENV !== 'production' && (
+          <Link
+            href="/dev/tokens"
+            className="text-xs uppercase tracking-caption border border-line px-3 py-1.5 hover:border-black transition-colors min-h-touch flex items-center"
+          >
+            Tokens
+          </Link>
+        )}
       </nav>
     </header>
   );

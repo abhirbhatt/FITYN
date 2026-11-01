@@ -9,9 +9,14 @@ import { assetPath } from '@/lib/utils/assetPath';
 interface HangTagProps {
   position?: [number, number, number];
   enabled?: boolean;
+  onClick?: () => void;
 }
 
-export function HangTag({ position = [0.42, 0.15, 0.05], enabled = true }: HangTagProps) {
+export function HangTag({
+  position = [0.42, 0.15, 0.05],
+  enabled = true,
+  onClick,
+}: HangTagProps) {
   const groupRef = useRef<THREE.Group>(null);
   const tagTexture = useTexture(assetPath('/garments/textures/hang-tag.webp'));
 
@@ -47,7 +52,19 @@ export function HangTag({ position = [0.42, 0.15, 0.05], enabled = true }: HangT
     <group position={position}>
       {/* Pivot at top where cord hangs */}
       <group ref={groupRef}>
-        <mesh position={[0, -0.22, 0]}>
+        <mesh
+          position={[0, -0.22, 0]}
+          onClick={(e) => {
+            e.stopPropagation();
+            onClick?.();
+          }}
+          onPointerOver={() => {
+            document.body.style.cursor = 'pointer';
+          }}
+          onPointerOut={() => {
+            document.body.style.cursor = 'auto';
+          }}
+        >
           <planeGeometry args={[0.22, 0.44]} />
           <meshBasicMaterial
             map={tagTexture}

@@ -7,6 +7,7 @@ import { Product } from '@/lib/types/commerce';
 import { createGarmentMaterial } from './shaders/garmentShader';
 import { HangTag } from './HangTag';
 import { assetPath } from '@/lib/utils/assetPath';
+import { useSceneStore } from '@/store/useSceneStore';
 
 interface GarmentPlaneProps {
   product: Product;
@@ -35,6 +36,7 @@ export function GarmentPlane({
 }: GarmentPlaneProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   const groupRef = useRef<THREE.Group>(null);
+  const setColourway = useSceneStore((s) => s.setColourway);
 
   // Current variant based on colourwayIndex
   const currentVariant = product.variants[colourwayIndex % product.variants.length];
@@ -91,6 +93,7 @@ export function GarmentPlane({
   const targetScale = useRef(1);
   const targetZ = useRef(0);
   const targetMipBias = useRef(0);
+  const targetDim = useRef(1.0);
 
   useFrame((state, delta) => {
     if (!groupRef.current || !meshRef.current || !material) return;
@@ -107,6 +110,7 @@ export function GarmentPlane({
     targetScale.current = isActive ? 1.04 : 0.94;
     targetZ.current = isActive ? 0.35 : -0.15;
     targetMipBias.current = blurEnabled && !isActive ? 2.8 : 0.0;
+    targetDim.current = isActive ? 1.0 : 0.60;
 
     // Smooth lerping
     const lerpFactor = reducedMotion ? 1.0 : Math.min(1.0, delta * 7.0);
@@ -131,6 +135,13 @@ export function GarmentPlane({
     material.uniforms.uMipBias.value = THREE.MathUtils.lerp(
       material.uniforms.uMipBias.value,
       targetMipBias.current,
+      lerpFactor,
+    );
+
+    // Spotlight focus: smooth dimming of inactive garments
+    material.uniforms.uDim.value = THREE.MathUtils.lerp(
+      material.uniforms.uDim.value,
+      targetDim.current,
       lerpFactor,
     );
 
@@ -172,9 +183,16 @@ export function GarmentPlane({
         <primitive object={material} attach="material" />
       </mesh>
 
-      {/* Damped Spring Hang-Tag (Mounted on Active Garment) */}
+      {/* Damped Spring Hang-Tag (Mounted on Active Garment, click to cycle colourway) */}
       {isActive && hangTagsEnabled && (
-        <HangTag position={[0.45, 0.45, 0.08]} enabled={!reducedMotion} />
+        <HangTag
+          position={[0.45, 0.45, 0.08]}
+          enabled={!reducedMotion}
+          onClick={() => {
+            const nextIdx = (colourwayIndex + 1) % product.variants.length;
+            setColourway(nextIdx);
+          }}
+        />
       )}
     </group>
   );
