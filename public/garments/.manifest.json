@@ -1,0 +1,665 @@
+[
+  {
+    "path": "/garments/tank-top/slate-front-1024.webp",
+    "archetype": "tank-top",
+    "variantKey": "slate",
+    "side": "front",
+    "resolution": "1024x1024",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 18884
+  },
+  {
+    "path": "/garments/tank-top/slate-front-2048.webp",
+    "archetype": "tank-top",
+    "variantKey": "slate",
+    "side": "front",
+    "resolution": "2048x2048",
+    "width": 2048,
+    "height": 2048,
+    "fileSize": 43782
+  },
+  {
+    "path": "/garments/tank-top/slate-front.webp",
+    "archetype": "tank-top",
+    "variantKey": "slate",
+    "side": "front",
+    "resolution": "1024x1024 (canonical)",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 18884
+  },
+  {
+    "path": "/garments/tank-top/slate-back-1024.webp",
+    "archetype": "tank-top",
+    "variantKey": "slate",
+    "side": "back",
+    "resolution": "1024x1024",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 20392
+  },
+  {
+    "path": "/garments/tank-top/slate-back-2048.webp",
+    "archetype": "tank-top",
+    "variantKey": "slate",
+    "side": "back",
+    "resolution": "2048x2048",
+    "width": 2048,
+    "height": 2048,
+    "fileSize": 47164
+  },
+  {
+    "path": "/garments/tank-top/slate-back.webp",
+    "archetype": "tank-top",
+    "variantKey": "slate",
+    "side": "back",
+    "resolution": "1024x1024 (canonical)",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 20392
+  },
+  {
+    "path": "/garments/tank-top/bone-front-1024.webp",
+    "archetype": "tank-top",
+    "variantKey": "bone",
+    "side": "front",
+    "resolution": "1024x1024",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 19424
+  },
+  {
+    "path": "/garments/tank-top/bone-front-2048.webp",
+    "archetype": "tank-top",
+    "variantKey": "bone",
+    "side": "front",
+    "resolution": "2048x2048",
+    "width": 2048,
+    "height": 2048,
+    "fileSize": 44036
+  },
+  {
+    "path": "/garments/tank-top/bone-front.webp",
+    "archetype": "tank-top",
+    "variantKey": "bone",
+    "side": "front",
+    "resolution": "1024x1024 (canonical)",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 19424
+  },
+  {
+    "path": "/garments/tank-top/bone-back-1024.webp",
+    "archetype": "tank-top",
+    "variantKey": "bone",
+    "side": "back",
+    "resolution": "1024x1024",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 21030
+  },
+  {
+    "path": "/garments/tank-top/bone-back-2048.webp",
+    "archetype": "tank-top",
+    "variantKey": "bone",
+    "side": "back",
+    "resolution": "2048x2048",
+    "width": 2048,
+    "height": 2048,
+    "fileSize": 47490
+  },
+  {
+    "path": "/garments/tank-top/bone-back.webp",
+    "archetype": "tank-top",
+    "variantKey": "bone",
+    "side": "back",
+    "resolution": "1024x1024 (canonical)",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 21030
+  },
+  {
+    "path": "/garments/oversized-tee/onyx-front-1024.webp",
+    "archetype": "oversized-tee",
+    "variantKey": "onyx",
+    "side": "front",
+    "resolution": "1024x1024",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 19544
+  },
+  {
+    "path": "/garments/oversized-tee/onyx-front-2048.webp",
+    "archetype": "oversized-tee",
+    "variantKey": "onyx",
+    "side": "front",
+    "resolution": "2048x2048",
+    "width": 2048,
+    "height": 2048,
+    "fileSize": 46020
+  },
+  {
+    "path": "/garments/oversized-tee/onyx-front.webp",
+    "archetype": "oversized-tee",
+    "variantKey": "onyx",
+    "side": "front",
+    "resolution": "1024x1024 (canonical)",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 19544
+  },
+  {
+    "path": "/garments/oversized-tee/onyx-back-1024.webp",
+    "archetype": "oversized-tee",
+    "variantKey": "onyx",
+    "side": "back",
+    "resolution": "1024x1024",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 23596
+  },
+  {
+    "path": "/garments/oversized-tee/onyx-back-2048.webp",
+    "archetype": "oversized-tee",
+    "variantKey": "onyx",
+    "side": "back",
+    "resolution": "2048x2048",
+    "width": 2048,
+    "height": 2048,
+    "fileSize": 56336
+  },
+  {
+    "path": "/garments/oversized-tee/onyx-back.webp",
+    "archetype": "oversized-tee",
+    "variantKey": "onyx",
+    "side": "back",
+    "resolution": "1024x1024 (canonical)",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 23596
+  },
+  {
+    "path": "/garments/oversized-tee/olive-front-1024.webp",
+    "archetype": "oversized-tee",
+    "variantKey": "olive",
+    "side": "front",
+    "resolution": "1024x1024",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 21690
+  },
+  {
+    "path": "/garments/oversized-tee/olive-front-2048.webp",
+    "archetype": "oversized-tee",
+    "variantKey": "olive",
+    "side": "front",
+    "resolution": "2048x2048",
+    "width": 2048,
+    "height": 2048,
+    "fileSize": 51438
+  },
+  {
+    "path": "/garments/oversized-tee/olive-front.webp",
+    "archetype": "oversized-tee",
+    "variantKey": "olive",
+    "side": "front",
+    "resolution": "1024x1024 (canonical)",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 21690
+  },
+  {
+    "path": "/garments/oversized-tee/olive-back-1024.webp",
+    "archetype": "oversized-tee",
+    "variantKey": "olive",
+    "side": "back",
+    "resolution": "1024x1024",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 26344
+  },
+  {
+    "path": "/garments/oversized-tee/olive-back-2048.webp",
+    "archetype": "oversized-tee",
+    "variantKey": "olive",
+    "side": "back",
+    "resolution": "2048x2048",
+    "width": 2048,
+    "height": 2048,
+    "fileSize": 62704
+  },
+  {
+    "path": "/garments/oversized-tee/olive-back.webp",
+    "archetype": "oversized-tee",
+    "variantKey": "olive",
+    "side": "back",
+    "resolution": "1024x1024 (canonical)",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 26344
+  },
+  {
+    "path": "/garments/hoodie/charcoal-front-1024.webp",
+    "archetype": "hoodie",
+    "variantKey": "charcoal",
+    "side": "front",
+    "resolution": "1024x1024",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 21538
+  },
+  {
+    "path": "/garments/hoodie/charcoal-front-2048.webp",
+    "archetype": "hoodie",
+    "variantKey": "charcoal",
+    "side": "front",
+    "resolution": "2048x2048",
+    "width": 2048,
+    "height": 2048,
+    "fileSize": 52302
+  },
+  {
+    "path": "/garments/hoodie/charcoal-front.webp",
+    "archetype": "hoodie",
+    "variantKey": "charcoal",
+    "side": "front",
+    "resolution": "1024x1024 (canonical)",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 21538
+  },
+  {
+    "path": "/garments/hoodie/charcoal-back-1024.webp",
+    "archetype": "hoodie",
+    "variantKey": "charcoal",
+    "side": "back",
+    "resolution": "1024x1024",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 25250
+  },
+  {
+    "path": "/garments/hoodie/charcoal-back-2048.webp",
+    "archetype": "hoodie",
+    "variantKey": "charcoal",
+    "side": "back",
+    "resolution": "2048x2048",
+    "width": 2048,
+    "height": 2048,
+    "fileSize": 60300
+  },
+  {
+    "path": "/garments/hoodie/charcoal-back.webp",
+    "archetype": "hoodie",
+    "variantKey": "charcoal",
+    "side": "back",
+    "resolution": "1024x1024 (canonical)",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 25250
+  },
+  {
+    "path": "/garments/hoodie/chalk-front-1024.webp",
+    "archetype": "hoodie",
+    "variantKey": "chalk",
+    "side": "front",
+    "resolution": "1024x1024",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 23630
+  },
+  {
+    "path": "/garments/hoodie/chalk-front-2048.webp",
+    "archetype": "hoodie",
+    "variantKey": "chalk",
+    "side": "front",
+    "resolution": "2048x2048",
+    "width": 2048,
+    "height": 2048,
+    "fileSize": 57248
+  },
+  {
+    "path": "/garments/hoodie/chalk-front.webp",
+    "archetype": "hoodie",
+    "variantKey": "chalk",
+    "side": "front",
+    "resolution": "1024x1024 (canonical)",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 23630
+  },
+  {
+    "path": "/garments/hoodie/chalk-back-1024.webp",
+    "archetype": "hoodie",
+    "variantKey": "chalk",
+    "side": "back",
+    "resolution": "1024x1024",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 27998
+  },
+  {
+    "path": "/garments/hoodie/chalk-back-2048.webp",
+    "archetype": "hoodie",
+    "variantKey": "chalk",
+    "side": "back",
+    "resolution": "2048x2048",
+    "width": 2048,
+    "height": 2048,
+    "fileSize": 66628
+  },
+  {
+    "path": "/garments/hoodie/chalk-back.webp",
+    "archetype": "hoodie",
+    "variantKey": "chalk",
+    "side": "back",
+    "resolution": "1024x1024 (canonical)",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 27998
+  },
+  {
+    "path": "/garments/bomber-jacket/tactical-olive-front-1024.webp",
+    "archetype": "bomber-jacket",
+    "variantKey": "tactical-olive",
+    "side": "front",
+    "resolution": "1024x1024",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 23160
+  },
+  {
+    "path": "/garments/bomber-jacket/tactical-olive-front-2048.webp",
+    "archetype": "bomber-jacket",
+    "variantKey": "tactical-olive",
+    "side": "front",
+    "resolution": "2048x2048",
+    "width": 2048,
+    "height": 2048,
+    "fileSize": 54148
+  },
+  {
+    "path": "/garments/bomber-jacket/tactical-olive-front.webp",
+    "archetype": "bomber-jacket",
+    "variantKey": "tactical-olive",
+    "side": "front",
+    "resolution": "1024x1024 (canonical)",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 23160
+  },
+  {
+    "path": "/garments/bomber-jacket/tactical-olive-back-1024.webp",
+    "archetype": "bomber-jacket",
+    "variantKey": "tactical-olive",
+    "side": "back",
+    "resolution": "1024x1024",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 25326
+  },
+  {
+    "path": "/garments/bomber-jacket/tactical-olive-back-2048.webp",
+    "archetype": "bomber-jacket",
+    "variantKey": "tactical-olive",
+    "side": "back",
+    "resolution": "2048x2048",
+    "width": 2048,
+    "height": 2048,
+    "fileSize": 61600
+  },
+  {
+    "path": "/garments/bomber-jacket/tactical-olive-back.webp",
+    "archetype": "bomber-jacket",
+    "variantKey": "tactical-olive",
+    "side": "back",
+    "resolution": "1024x1024 (canonical)",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 25326
+  },
+  {
+    "path": "/garments/bomber-jacket/pitch-black-front-1024.webp",
+    "archetype": "bomber-jacket",
+    "variantKey": "pitch-black",
+    "side": "front",
+    "resolution": "1024x1024",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 22062
+  },
+  {
+    "path": "/garments/bomber-jacket/pitch-black-front-2048.webp",
+    "archetype": "bomber-jacket",
+    "variantKey": "pitch-black",
+    "side": "front",
+    "resolution": "2048x2048",
+    "width": 2048,
+    "height": 2048,
+    "fileSize": 51208
+  },
+  {
+    "path": "/garments/bomber-jacket/pitch-black-front.webp",
+    "archetype": "bomber-jacket",
+    "variantKey": "pitch-black",
+    "side": "front",
+    "resolution": "1024x1024 (canonical)",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 22062
+  },
+  {
+    "path": "/garments/bomber-jacket/pitch-black-back-1024.webp",
+    "archetype": "bomber-jacket",
+    "variantKey": "pitch-black",
+    "side": "back",
+    "resolution": "1024x1024",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 24924
+  },
+  {
+    "path": "/garments/bomber-jacket/pitch-black-back-2048.webp",
+    "archetype": "bomber-jacket",
+    "variantKey": "pitch-black",
+    "side": "back",
+    "resolution": "2048x2048",
+    "width": 2048,
+    "height": 2048,
+    "fileSize": 60318
+  },
+  {
+    "path": "/garments/bomber-jacket/pitch-black-back.webp",
+    "archetype": "bomber-jacket",
+    "variantKey": "pitch-black",
+    "side": "back",
+    "resolution": "1024x1024 (canonical)",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 24924
+  },
+  {
+    "path": "/garments/cap/black-front-1024.webp",
+    "archetype": "cap",
+    "variantKey": "black",
+    "side": "front",
+    "resolution": "1024x1024",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 13962
+  },
+  {
+    "path": "/garments/cap/black-front-2048.webp",
+    "archetype": "cap",
+    "variantKey": "black",
+    "side": "front",
+    "resolution": "2048x2048",
+    "width": 2048,
+    "height": 2048,
+    "fileSize": 35618
+  },
+  {
+    "path": "/garments/cap/black-front.webp",
+    "archetype": "cap",
+    "variantKey": "black",
+    "side": "front",
+    "resolution": "1024x1024 (canonical)",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 13962
+  },
+  {
+    "path": "/garments/cap/black-back-1024.webp",
+    "archetype": "cap",
+    "variantKey": "black",
+    "side": "back",
+    "resolution": "1024x1024",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 12140
+  },
+  {
+    "path": "/garments/cap/black-back-2048.webp",
+    "archetype": "cap",
+    "variantKey": "black",
+    "side": "back",
+    "resolution": "2048x2048",
+    "width": 2048,
+    "height": 2048,
+    "fileSize": 30556
+  },
+  {
+    "path": "/garments/cap/black-back.webp",
+    "archetype": "cap",
+    "variantKey": "black",
+    "side": "back",
+    "resolution": "1024x1024 (canonical)",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 12140
+  },
+  {
+    "path": "/garments/cap/stone-front-1024.webp",
+    "archetype": "cap",
+    "variantKey": "stone",
+    "side": "front",
+    "resolution": "1024x1024",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 17148
+  },
+  {
+    "path": "/garments/cap/stone-front-2048.webp",
+    "archetype": "cap",
+    "variantKey": "stone",
+    "side": "front",
+    "resolution": "2048x2048",
+    "width": 2048,
+    "height": 2048,
+    "fileSize": 42402
+  },
+  {
+    "path": "/garments/cap/stone-front.webp",
+    "archetype": "cap",
+    "variantKey": "stone",
+    "side": "front",
+    "resolution": "1024x1024 (canonical)",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 17148
+  },
+  {
+    "path": "/garments/cap/stone-back-1024.webp",
+    "archetype": "cap",
+    "variantKey": "stone",
+    "side": "back",
+    "resolution": "1024x1024",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 14452
+  },
+  {
+    "path": "/garments/cap/stone-back-2048.webp",
+    "archetype": "cap",
+    "variantKey": "stone",
+    "side": "back",
+    "resolution": "2048x2048",
+    "width": 2048,
+    "height": 2048,
+    "fileSize": 35474
+  },
+  {
+    "path": "/garments/cap/stone-back.webp",
+    "archetype": "cap",
+    "variantKey": "stone",
+    "side": "back",
+    "resolution": "1024x1024 (canonical)",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 14452
+  },
+  {
+    "path": "/garments/textures/hang-tag-1024.webp",
+    "resolution": "1024x1024",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 13932
+  },
+  {
+    "path": "/garments/textures/hang-tag-2048.webp",
+    "resolution": "2048x2048",
+    "width": 2048,
+    "height": 2048,
+    "fileSize": 36282
+  },
+  {
+    "path": "/garments/textures/hang-tag.webp",
+    "resolution": "1024x1024 (canonical)",
+    "width": 1024,
+    "height": 1024,
+    "fileSize": 13932
+  },
+  {
+    "path": "/garments/textures/rail-1024.webp",
+    "resolution": "1024x128",
+    "width": 1024,
+    "height": 128,
+    "fileSize": 1418
+  },
+  {
+    "path": "/garments/textures/rail-2048.webp",
+    "resolution": "2048x256",
+    "width": 2048,
+    "height": 256,
+    "fileSize": 3886
+  },
+  {
+    "path": "/garments/textures/rail.webp",
+    "resolution": "1024x128 (canonical)",
+    "width": 1024,
+    "height": 128,
+    "fileSize": 1418
+  },
+  {
+    "path": "/garments/textures/ground-shadow-1024.webp",
+    "resolution": "1024x512",
+    "width": 1024,
+    "height": 512,
+    "fileSize": 14836
+  },
+  {
+    "path": "/garments/textures/ground-shadow-2048.webp",
+    "resolution": "2048x1024",
+    "width": 2048,
+    "height": 1024,
+    "fileSize": 35958
+  },
+  {
+    "path": "/garments/textures/ground-shadow.webp",
+    "resolution": "1024x512 (canonical)",
+    "width": 1024,
+    "height": 512,
+    "fileSize": 14836
+  }
+]
