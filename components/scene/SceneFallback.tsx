@@ -14,10 +14,13 @@ export function SceneFallback() {
     side,
     garmentColourways,
     routeFocus,
+    viewMode,
     setActiveGarment,
+    enterFocus,
   } = useSceneStore();
 
   const isProductRoute = routeFocus === 'product';
+  const isFocusMode = viewMode === 'focus';
 
   // In product view mode, render only the active garment in the dedicated product stage
   if (isProductRoute) {
@@ -55,13 +58,19 @@ export function SceneFallback() {
   return (
     <div className="w-full h-full relative overflow-hidden flex flex-col items-center justify-center">
       {/* 2D Rail Metal Silhouette */}
-      <div className="absolute top-[26%] w-[120%] h-[2px] bg-line z-0" />
+      <div
+        className={`absolute top-[26%] w-[120%] h-[2px] bg-line z-0 transition-opacity duration-500 ${
+          isFocusMode ? 'opacity-20' : 'opacity-100'
+        }`}
+      />
 
       {/* Horizontal CSS Transform Rail Container */}
       <div
         className="flex items-center transition-transform duration-500 ease-out z-10"
         style={{
-          transform: `translateX(calc(50vw - ${activeGarmentIndex * ITEM_WIDTH + HALF_ITEM}px))`,
+          transform: `translateX(calc(50vw - ${
+            activeGarmentIndex * ITEM_WIDTH + HALF_ITEM
+          }px))`,
         }}
       >
         {PRODUCTS.map((prod, idx) => {
@@ -74,10 +83,20 @@ export function SceneFallback() {
           return (
             <div
               key={prod.id}
-              onClick={() => setActiveGarment(idx, prod.id)}
+              onClick={() => {
+                if (isActive) {
+                  if (!isFocusMode) enterFocus();
+                } else {
+                  setActiveGarment(idx, prod.id);
+                }
+              }}
               className={`flex-shrink-0 w-[260px] mx-4 flex flex-col items-center cursor-pointer transition-all duration-500 ${
                 isActive
-                  ? 'scale-105 opacity-100 z-20'
+                  ? isFocusMode
+                    ? 'scale-125 opacity-100 z-30'
+                    : 'scale-105 opacity-100 z-20'
+                  : isFocusMode
+                  ? 'scale-80 opacity-25 filter blur-[3px] pointer-events-none z-10'
                   : 'scale-90 opacity-60 filter blur-[1px] hover:opacity-85 z-10'
               }`}
             >
@@ -96,15 +115,17 @@ export function SceneFallback() {
                 />
               </div>
 
-              {/* Garment Label */}
-              <div className="mt-3 text-center">
-                <span className="font-display text-xs uppercase tracking-display text-black">
-                  {prod.name}
-                </span>
-                <span className="block font-sans text-[11px] text-black/60">
-                  {variant.colourName}
-                </span>
-              </div>
+              {/* Garment Label (shown only when not in focus mode) */}
+              {!isFocusMode && (
+                <div className="mt-3 text-center">
+                  <span className="font-display text-xs uppercase tracking-display text-black">
+                    {prod.name}
+                  </span>
+                  <span className="block font-sans text-[11px] text-black/60">
+                    {variant.colourName}
+                  </span>
+                </div>
+              )}
             </div>
           );
         })}

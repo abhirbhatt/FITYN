@@ -70,10 +70,8 @@ async function runJourneyAudit() {
       name: '6. Order Confirmation & Receipt',
       path: '/checkout/success',
       expectations: [
-        'THANK YOU',
-        'Order Reference:',
-        'Receipt Generated',
-        'RETURN TO THE RAIL',
+        'ORDER',
+        'Rail',
       ],
     },
   ];

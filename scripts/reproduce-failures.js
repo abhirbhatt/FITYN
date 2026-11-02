@@ -200,33 +200,39 @@ async function runAudit() {
 
   // STEP 6: Direct visit to /checkout/success without active order
   console.log('[AUDIT 6] Testing direct visit to /checkout/success...');
-  const directContext = await browser.newContext();
-  const directPage = await directContext.newPage();
-  await directPage.goto(`${BASE_URL}/checkout/success`, { waitUntil: 'networkidle' });
+  const directPage = await desktopContext.newPage();
+  await directPage.goto(`${BASE_URL}/checkout/success`, { waitUntil: 'domcontentloaded' });
   const directOrderRef = await directPage.locator('text=Order Reference:').textContent().catch(() => null);
   observations.push(`Direct visit to success route without order showed: "${directOrderRef}"`);
-  await directContext.close();
+  await directPage.close();
 
   // STEP 7: Mobile Viewport Audit (390x844 - iPhone 12/13/14)
   console.log('[AUDIT 7] Mobile Viewport Audit (390x844)...');
-  const mobileContext = await browser.newContext({
-    viewport: { width: 390, height: 844 },
-    isMobile: true,
-  });
-  const mobilePage = await mobileContext.newPage();
-  await mobilePage.goto(BASE_URL, { waitUntil: 'networkidle' });
-  await mobilePage.screenshot({ path: path.join(SCREENSHOT_DIR, '07_mobile_home.png') });
+  const safeScreenshot = async (p, filename) => {
+    try {
+      await p.screenshot({ path: path.join(SCREENSHOT_DIR, filename) });
+    } catch (err) {
+      console.warn(`[WARN] Screenshot skipped for ${filename}: ${err.message}`);
+    }
+  };
 
-  await mobilePage.goto(`${BASE_URL}/product/heavyweight-boxy-tee`, { waitUntil: 'networkidle' });
-  await mobilePage.screenshot({ path: path.join(SCREENSHOT_DIR, '08_mobile_product.png') });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(BASE_URL, { waitUntil: 'domcontentloaded' });
+  await page.waitForTimeout(600);
+  await safeScreenshot(page, '07_mobile_home.png');
 
-  await mobilePage.goto(`${BASE_URL}/cart`, { waitUntil: 'networkidle' });
-  await mobilePage.screenshot({ path: path.join(SCREENSHOT_DIR, '09_mobile_cart.png') });
+  await page.goto(`${BASE_URL}/product/heavyweight-boxy-tee`, { waitUntil: 'domcontentloaded' });
+  await page.waitForTimeout(600);
+  await safeScreenshot(page, '08_mobile_product.png');
 
-  await mobilePage.goto(`${BASE_URL}/checkout`, { waitUntil: 'networkidle' });
-  await mobilePage.screenshot({ path: path.join(SCREENSHOT_DIR, '10_mobile_checkout.png') });
+  await page.goto(`${BASE_URL}/cart`, { waitUntil: 'domcontentloaded' });
+  await page.waitForTimeout(600);
+  await safeScreenshot(page, '09_mobile_cart.png');
 
-  await mobileContext.close();
+  await page.goto(`${BASE_URL}/checkout`, { waitUntil: 'domcontentloaded' });
+  await page.waitForTimeout(600);
+  await safeScreenshot(page, '10_mobile_checkout.png');
+
   await desktopContext.close();
   await browser.close();
 

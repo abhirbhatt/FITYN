@@ -9,6 +9,8 @@ export type SceneRouteFocus =
   | 'checkout'
   | 'idle';
 
+export type ViewMode = 'rail' | 'focus';
+
 interface SceneState {
   activeGarmentIndex: number;
   activeGarmentId: string | null;
@@ -16,6 +18,7 @@ interface SceneState {
   colourwayIndex: number;
   garmentColourways: Record<number, number>;
   routeFocus: SceneRouteFocus;
+  viewMode: ViewMode;
   totalGarments: number;
   setActiveGarment: (index: number, id?: string | null) => void;
   setSide: (side: GarmentSide) => void;
@@ -24,6 +27,9 @@ interface SceneState {
   setGarmentColourway: (garmentIndex: number, colourwayIndex: number) => void;
   getGarmentColourway: (garmentIndex: number) => number;
   setRouteFocus: (focus: SceneRouteFocus) => void;
+  setViewMode: (mode: ViewMode) => void;
+  enterFocus: () => void;
+  exitFocus: () => void;
   nextGarment: () => void;
   prevGarment: () => void;
   resetScene: () => void;
@@ -36,6 +42,7 @@ export const useSceneStore = create<SceneState>((set, get) => ({
   colourwayIndex: 0,
   garmentColourways: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 },
   routeFocus: 'rail',
+  viewMode: 'rail',
   totalGarments: 7,
 
   setActiveGarment: (index: number, id: string | null = null) => {
@@ -85,7 +92,19 @@ export const useSceneStore = create<SceneState>((set, get) => ({
     return get().garmentColourways[garmentIndex] ?? 0;
   },
 
-  setRouteFocus: (routeFocus: SceneRouteFocus) => set({ routeFocus }),
+  setRouteFocus: (routeFocus: SceneRouteFocus) => {
+    set({
+      routeFocus,
+      // If navigating to another route, reset viewMode to rail
+      viewMode: 'rail',
+    });
+  },
+
+  setViewMode: (viewMode: ViewMode) => set({ viewMode }),
+
+  enterFocus: () => set({ viewMode: 'focus' }),
+
+  exitFocus: () => set({ viewMode: 'rail' }),
 
   nextGarment: () =>
     set((state) => {
@@ -115,6 +134,7 @@ export const useSceneStore = create<SceneState>((set, get) => ({
       activeGarmentId: null,
       side: 'front',
       colourwayIndex: 0,
+      viewMode: 'rail',
       garmentColourways: { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 },
     }),
 }));

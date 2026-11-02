@@ -1,11 +1,15 @@
 'use client';
 
-import React from 'react';
+import React, { useRef } from 'react';
 import * as THREE from 'three';
+import { useFrame } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
 import { assetPath } from '@/lib/utils/assetPath';
+import { useSceneStore } from '@/store/useSceneStore';
 
 export function RailGeometry() {
+  const groupRef = useRef<THREE.Group>(null);
+  const viewMode = useSceneStore((s) => s.viewMode);
   const railTexture = useTexture(assetPath('/garments/textures/rail.webp'));
   const shadowTexture = useTexture(assetPath('/garments/textures/ground-shadow.webp'));
 
@@ -14,8 +18,20 @@ export function RailGeometry() {
   railTexture.wrapT = THREE.ClampToEdgeWrapping;
   railTexture.repeat.set(8, 1);
 
+  // Smoothly fade/translate rail when entering focus mode
+  useFrame((_, delta) => {
+    if (!groupRef.current) return;
+    const isFocus = viewMode === 'focus';
+    const targetY = isFocus ? 0.35 : 0.0;
+    groupRef.current.position.y = THREE.MathUtils.lerp(
+      groupRef.current.position.y,
+      targetY,
+      Math.min(1.0, delta * 4.0),
+    );
+  });
+
   return (
-    <group>
+    <group ref={groupRef}>
       {/* Horizontal Steel Rail Bar (spanning width) */}
       <mesh position={[0, 1.25, 0]} rotation={[0, 0, Math.PI / 2]}>
         <cylinderGeometry args={[0.024, 0.024, 22, 12]} />

@@ -7,4 +7,9 @@
   --bg-2: #E9E9E4;
   --line: #D4D4CE;
   --white: #FFFFFF;
+
+  /* Marquee Ticker Tokens (Rule 2: default #486C2F, text #F3F3F0; commented neon green #39FF14 for switch) */
+  --ticker-bg: #486C2F;
+  /* --ticker-bg: #39FF14; (Neon green reference alternative: set to #39FF14 and --ticker-text to #0A0A0A) */
+  --ticker-text: #F3F3F0;
 }

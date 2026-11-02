@@ -9,72 +9,80 @@ import { assetPath } from '@/lib/utils/assetPath';
 interface HangTagProps {
   position?: [number, number, number];
   enabled?: boolean;
+  tint?: string;
+  isSelected?: boolean;
   onClick?: () => void;
 }
 
-  export function HangTag({
-    position = [0.42, 0.15, 0.05],
-    enabled = true,
-    onClick,
-  }: HangTagProps) {
-    const groupRef = useRef<THREE.Group>(null);
-    const tagTexture = useTexture(assetPath('/garments/textures/hang-tag.webp'));
+export function HangTag({
+  position = [0.42, 0.15, 0.05],
+  enabled = true,
+  tint,
+  isSelected = false,
+  onClick,
+}: HangTagProps) {
+  const groupRef = useRef<THREE.Group>(null);
+  const tagTexture = useTexture(assetPath('/garments/textures/hang-tag.webp'));
 
-    // Spring-damper physics variables
-    const theta = useRef(0);
-    const omega = useRef(0);
+  // Spring-damper physics variables
+  const theta = useRef(0);
+  const omega = useRef(0);
 
-    useFrame((_, delta) => {
-      if (!groupRef.current) return;
+  useFrame((_, delta) => {
+    if (!groupRef.current) return;
 
-      if (!enabled) {
-        groupRef.current.rotation.z = 0;
-        return;
-      }
+    if (!enabled) {
+      groupRef.current.rotation.z = 0;
+      return;
+    }
 
-      const dt = Math.min(delta, 0.1);
-      const k = 18.0; // Spring stiffness
-      const damping = 2.4; // Damping ratio
+    const dt = Math.min(delta, 0.1);
+    const k = 18.0; // Spring stiffness
+    const damping = 2.4; // Damping ratio
 
-      // Ambient micro-oscillation mimicking garment draft
-      const windForce = Math.sin(Date.now() * 0.003) * 0.4;
-      const accel = -k * theta.current - damping * omega.current + windForce;
+    // Ambient micro-oscillation mimicking garment draft
+    const windForce = Math.sin(Date.now() * 0.003 + (position[0] || 0) * 2.0) * 0.35;
+    const accel = -k * theta.current - damping * omega.current + windForce;
 
-      omega.current += accel * dt;
-      theta.current += omega.current * dt;
+    omega.current += accel * dt;
+    theta.current += omega.current * dt;
 
-      // Apply rotation around Z-axis at top suspension pivot
-      groupRef.current.rotation.z = theta.current * 0.12;
-      groupRef.current.rotation.x = Math.sin(Date.now() * 0.002) * 0.05;
-    });
+    // Apply rotation around Z-axis at top suspension pivot
+    groupRef.current.rotation.z = theta.current * 0.12;
+    groupRef.current.rotation.x = Math.sin(Date.now() * 0.002) * 0.04;
+  });
 
-    return (
-      <group position={position}>
-        {/* Pivot at top where cord hangs */}
-        <group ref={groupRef}>
-            <mesh
-              position={[0, -0.22, 0]}
-              onClick={(e) => {
-                e.stopPropagation();
-                onClick?.();
-              }}
-              onPointerOver={() => {
-                document.body.style.cursor = 'pointer';
-              }}
-              onPointerOut={() => {
-                document.body.style.cursor = 'auto';
-              }}
-            >
-              <planeGeometry args={[0.22, 0.44]} />
-              <meshBasicMaterial
-                map={tagTexture}
-                transparent={true}
-                alphaTest={0.4}
-                side={THREE.DoubleSide}
-              />
-            </mesh>
-        </group>
+  return (
+    <group position={position}>
+      {/* Pivot at top where cord hangs */}
+      <group
+        ref={groupRef}
+        scale={isSelected ? 1.08 : 0.94}
+        position={[0, 0, isSelected ? 0.03 : 0]}
+      >
+        <mesh
+          position={[0, -0.22, 0]}
+          onClick={(e) => {
+            e.stopPropagation();
+            onClick?.();
+          }}
+          onPointerOver={() => {
+            document.body.style.cursor = 'pointer';
+          }}
+          onPointerOut={() => {
+            document.body.style.cursor = 'auto';
+          }}
+        >
+          <planeGeometry args={[0.22, 0.44]} />
+          <meshBasicMaterial
+            map={tagTexture}
+            transparent={true}
+            alphaTest={0.4}
+            color={tint ? new THREE.Color(tint) : new THREE.Color('#FFFFFF')}
+            side={THREE.DoubleSide}
+          />
+        </mesh>
       </group>
-    );
-  }
-
+    </group>
+  );
+}

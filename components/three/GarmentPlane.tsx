@@ -9,6 +9,7 @@ import { HangTag } from './HangTag';
 import { Hanger } from './Hanger';
 import { assetPath } from '@/lib/utils/assetPath';
 import { useSceneStore } from '@/store/useSceneStore';
+import { REFERENCE_TOKENS } from '@/lib/referenceTokens';
 
 interface GarmentPlaneProps {
   product: Product;
@@ -38,6 +39,11 @@ export function GarmentPlane({
   const meshRef = useRef<THREE.Mesh>(null);
   const groupRef = useRef<THREE.Group>(null);
   const setColourway = useSceneStore((s) => s.setColourway);
+  const viewMode = useSceneStore((s) => s.viewMode);
+  const enterFocus = useSceneStore((s) => s.enterFocus);
+  const toggleSide = useSceneStore((s) => s.toggleSide);
+
+  const isFocusMode = viewMode === 'focus';
 
   // Current variant based on colourwayIndex
   const currentVariant = product.variants[colourwayIndex % product.variants.length];
@@ -89,7 +95,7 @@ export function GarmentPlane({
     }
   }, [colourwayIndex, material, nextFrontTex, nextBackTex]);
 
-  // Smooth rotation target for 180deg flip
+  // Target coordinates and shader values
   const targetRotationY = useRef(0);
   const targetScale = useRef(1);
   const targetZ = useRef(0);
@@ -104,17 +110,27 @@ export function GarmentPlane({
 
     // Wind sway amplitude
     material.uniforms.uSwayAmplitude.value =
-      windEnabled && !reducedMotion ? 0.038 : 0.0;
+      windEnabled && !reducedMotion ? REFERENCE_TOKENS.timing.idleSwayAmplitude : 0.0;
 
-    // Target values
+    // Target values depending on whether we are in rail mode or focus mode
     targetRotationY.current = isFlipped ? Math.PI : 0;
-    targetScale.current = isActive ? 1.04 : 0.94;
-    targetZ.current = isActive ? 0.35 : -0.15;
-    targetMipBias.current = blurEnabled && !isActive ? 2.8 : 0.0;
-    targetDim.current = isActive ? 1.0 : 0.60;
+
+    if (isFocusMode) {
+      // FOCUS MODE: Active garment enlarges to 40-45% height; neighbours blur and dim like ghosts
+      targetScale.current = isActive ? REFERENCE_TOKENS.focus.garmentScale : 0.82;
+      targetZ.current = isActive ? 0.65 : -0.55;
+      targetMipBias.current = isActive ? 0.0 : REFERENCE_TOKENS.focus.inactiveBlurMipBias;
+      targetDim.current = isActive ? 1.0 : REFERENCE_TOKENS.focus.inactiveDim;
+    } else {
+      // RAIL MODE: Subtle active emphasis; slight neighbour bokeh
+      targetScale.current = isActive ? 1.16 : REFERENCE_TOKENS.rail.inactiveScale;
+      targetZ.current = isActive ? 0.25 : -0.15;
+      targetMipBias.current = blurEnabled && !isActive ? REFERENCE_TOKENS.rail.inactiveBlurMipBias : 0.0;
+      targetDim.current = isActive ? 1.0 : REFERENCE_TOKENS.rail.inactiveDim;
+    }
 
     // Smooth lerping
-    const lerpFactor = reducedMotion ? 1.0 : Math.min(1.0, delta * 7.0);
+    const lerpFactor = reducedMotion ? 1.0 : Math.min(1.0, delta * 6.5);
 
     meshRef.current.rotation.y = THREE.MathUtils.lerp(
       meshRef.current.rotation.y,
@@ -148,7 +164,7 @@ export function GarmentPlane({
 
     // Handle colourway noise wipe animation
     if (isTransitioningWipe.current) {
-      wipeProgress.current += delta * 1.6; // ~0.65s wipe duration
+      wipeProgress.current += delta * 2.2; // ~0.45s wipe duration matching REFERENCE_TOKENS
       if (wipeProgress.current >= 1.0) {
         wipeProgress.current = 1.0;
         isTransitioningWipe.current = false;
@@ -162,7 +178,7 @@ export function GarmentPlane({
     }
   });
 
-  // Hanger coordinates: Top of plane is at y = 0.35, pinned to rail at y = 1.25
+  // Top of plane is at y = 0.35, pinned to rail at y = 1.25
   return (
     <group ref={groupRef} position={[0, 0, 0]}>
       {/* 3D Boutique Metallic Hanger Hooked Over Rail */}
@@ -174,7 +190,15 @@ export function GarmentPlane({
         position={[0, 0.25, 0]}
         onClick={(e) => {
           e.stopPropagation();
-          onSelect(index);
+          if (isActive) {
+            if (isFocusMode) {
+              toggleSide();
+            } else {
+              enterFocus();
+            }
+          } else {
+            onSelect(index);
+          }
         }}
         onPointerOver={() => {
           document.body.style.cursor = 'pointer';
@@ -187,18 +211,22 @@ export function GarmentPlane({
         <primitive object={material} attach="material" />
       </mesh>
 
-      {/* Damped Spring Hang-Tag (Mounted on Active Garment, click to cycle colourway) */}
-      {isActive && hangTagsEnabled && (
-        <HangTag
-          position={[0.45, 0.45, 0.08]}
-          enabled={!reducedMotion}
-          onClick={() => {
-            const nextIdx = (colourwayIndex + 1) % product.variants.length;
-            setColourway(nextIdx);
-          }}
-        />
-      )}
+      {/* Damped Spring Hang-Tags (Mounted on Active Garment, click tag to select colourway) */}
+      {isActive && hangTagsEnabled && product.variants.map((variant, vIdx) => {
+        const isSelected = (colourwayIndex % product.variants.length) === vIdx;
+        return (
+          <HangTag
+            key={variant.id}
+            position={[0.44 + vIdx * 0.14, 0.45 - vIdx * 0.03, 0.08 - vIdx * 0.02]}
+            tint={variant.colourHex}
+            isSelected={isSelected}
+            enabled={!reducedMotion}
+            onClick={() => {
+              setColourway(vIdx);
+            }}
+          />
+        );
+      })}
     </group>
   );
 }
-

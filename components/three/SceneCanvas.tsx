@@ -3,6 +3,7 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { useQualityStore } from '@/store/useQualityStore';
+import { REFERENCE_TOKENS } from '@/lib/referenceTokens';
 import { GarmentRail } from './GarmentRail';
 import { SceneLighting } from './SceneLighting';
 
@@ -43,7 +44,16 @@ export default function SceneCanvas() {
   return (
     <div id="fityn-persistent-canvas" className="w-full h-full relative">
       <Canvas
-        camera={{ position: [0, 0.05, 4.3], fov: 42 }}
+        camera={{
+          position: [
+            REFERENCE_TOKENS.camera.defaultX,
+            REFERENCE_TOKENS.camera.defaultY,
+            REFERENCE_TOKENS.camera.defaultZ,
+          ],
+          fov: REFERENCE_TOKENS.camera.fov,
+          near: 0.1,
+          far: 50,
+        }}
         dpr={[1, maxDpr]}
         gl={{
           antialias: tier === 'high',
@@ -61,4 +71,3 @@ export default function SceneCanvas() {
     </div>
   );
 }
-
